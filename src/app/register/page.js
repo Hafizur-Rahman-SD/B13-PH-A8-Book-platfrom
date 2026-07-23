@@ -15,29 +15,38 @@ export default function RegisterPage() {
     event.preventDefault();
     setLoading(true);
 
-    const { error } = await authClient.signUp.email({
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      image: form.image || undefined,
-    });
+    try {
+      const { error } = await authClient.signUp.email({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        image: form.image || undefined,
+      });
 
-    if (error) {
-      toast.error(error.message || 'Registration failed');
+      if (error) {
+        toast.error(error.message || 'Registration failed');
+        setLoading(false);
+        return;
+      }
+
+      toast.success('Account created! Please login now.');
+      router.push('/login');
+    } catch {
+      toast.error('Could not reach the server. Restart npm run dev and try again.');
+    } finally {
       setLoading(false);
-      return;
     }
-
-    toast.success('Account created! Please login now.');
-    router.push('/login');
-    setLoading(false);
   };
 
   const handleGoogleRegister = async () => {
-    await authClient.signIn.social({
-      provider: 'google',
-      callbackURL: '/',
-    });
+    try {
+      await authClient.signIn.social({
+        provider: 'google',
+        callbackURL: '/',
+      });
+    } catch {
+      toast.error('Google login needs GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env.local');
+    }
   };
 
   return (

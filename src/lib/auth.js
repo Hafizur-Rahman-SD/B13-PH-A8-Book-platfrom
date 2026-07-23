@@ -17,7 +17,8 @@ function getMongoClient() {
   return globalForMongo._mongoClient;
 }
 
-const mongoDb = getMongoClient().db('book-platform');
+const mongoClient = getMongoClient();
+const mongoDb = mongoClient.db('book-platform');
 
 const socialProviders = {};
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
@@ -30,7 +31,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
   secret: process.env.BETTER_AUTH_SECRET,
-  database: mongodbAdapter(mongoDb),
+  database: mongodbAdapter(mongoDb, { client: mongoClient }),
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,

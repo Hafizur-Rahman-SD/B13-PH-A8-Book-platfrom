@@ -6,8 +6,8 @@ BookBloom is a modern online book borrowing platform built with Next.js, Tailwin
 
 ## Live URL
 
-- Local: [http://localhost:3000](http://localhost:3000)
-- Production: _Add your Vercel/Render URL after deployment_
+- Local: 
+- Production: _Add  Vercel/Render URL after deployment_
 
 ## Key Features
 
@@ -56,8 +56,7 @@ MONGODB_URI=your_mongodb_connection_string
 BETTER_AUTH_URL=http://localhost:3000
 BETTER_AUTH_SECRET=your_random_secret_key
 NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+
 ```
 
 > **Never commit `.env.local` to GitHub.** It is already listed in `.gitignore`.

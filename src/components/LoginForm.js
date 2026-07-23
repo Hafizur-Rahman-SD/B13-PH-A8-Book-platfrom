@@ -19,25 +19,34 @@ export default function LoginForm() {
     event.preventDefault();
     setLoading(true);
 
-    const { error } = await authClient.signIn.email({ email, password });
+    try {
+      const { error } = await authClient.signIn.email({ email, password });
 
-    if (error) {
-      toast.error(error.message || 'Login failed');
+      if (error) {
+        toast.error(error.message || 'Login failed. Check email and password.');
+        setLoading(false);
+        return;
+      }
+
+      toast.success('Welcome back!');
+      router.push(redirectTo);
+      router.refresh();
+    } catch {
+      toast.error('Could not reach the server. Restart npm run dev and try again.');
+    } finally {
       setLoading(false);
-      return;
     }
-
-    toast.success('Welcome back!');
-    router.push(redirectTo);
-    router.refresh();
-    setLoading(false);
   };
 
   const handleGoogleLogin = async () => {
-    await authClient.signIn.social({
-      provider: 'google',
-      callbackURL: redirectTo,
-    });
+    try {
+      await authClient.signIn.social({
+        provider: 'google',
+        callbackURL: redirectTo,
+      });
+    } catch {
+      toast.error('Google login needs GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env.local');
+    }
   };
 
   return (
