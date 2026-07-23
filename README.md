@@ -115,3 +115,4 @@ src/
 | `/register` | Public | Registration form |
 | `/profile` | Private | User profile |
 | `/profile/update` | Private | Update name & photo |
+yrjr
