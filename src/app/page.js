@@ -3,9 +3,10 @@ import Link from 'next/link';
 import BookCard from '@/components/BookCard';
 import BookCarousel from '@/components/BookCarousel';
 import books from '@/data/books';
+import { getAppBaseUrl } from '@/lib/app-url';
 
 async function getFeaturedBooks() {
-  const baseUrl = process.env.BETTER_AUTH_URL || 'http://localhost:3000';
+  const baseUrl = getAppBaseUrl();
 
   try {
     const response = await fetch(`${baseUrl}/api/books?featured=4`, {

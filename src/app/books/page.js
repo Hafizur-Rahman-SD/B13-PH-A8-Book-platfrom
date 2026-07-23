@@ -1,8 +1,9 @@
 import BooksClient from '@/components/BooksClient';
 import books from '@/data/books';
+import { getAppBaseUrl } from '@/lib/app-url';
 
 async function getBooks() {
-  const baseUrl = process.env.BETTER_AUTH_URL || 'http://localhost:3000';
+  const baseUrl = getAppBaseUrl();
 
   try {
     const response = await fetch(`${baseUrl}/api/books`, { next: { revalidate: 60 } });

@@ -2,6 +2,9 @@
 
 import { createAuthClient } from 'better-auth/react';
 
+/** Same-origin requests — works on any port (3000, 3001, production). */
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL || 'http://localhost:3000',
+  fetchOptions: {
+    credentials: 'include',
+  },
 });
